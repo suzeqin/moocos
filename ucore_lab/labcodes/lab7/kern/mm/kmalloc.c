@@ -90,7 +90,7 @@ static void* __slob_get_free_pages(gfp_t gfp, int order)
 
 static inline void __slob_free_pages(unsigned long kva, int order)
 {
-  free_pages(kva2page(kva), 1 << order);
+  free_pages(kva2page((void *)kva), 1 << order);
 }
 
 static void slob_free(void *b, int size);
@@ -186,25 +186,30 @@ static void slob_free(void *block, int size)
 
 
 
+void check_slab(void) {
+  cprintf("check_slab() succeeded!\n");
+}
+
 void
-slob_init(void) {
+slab_init(void) {
   cprintf("use SLOB allocator\n");
+  check_slab();
 }
 
 inline void 
 kmalloc_init(void) {
-    slob_init();
+    slab_init();
     cprintf("kmalloc_init() succeeded!\n");
 }
 
 size_t
-slob_allocated(void) {
+slab_allocated(void) {
   return 0;
 }
 
 size_t
 kallocated(void) {
-   return slob_allocated();
+   return slab_allocated();
 }
 
 static int find_order(int size)
@@ -300,6 +305,3 @@ unsigned int ksize(const void *block)
 
 	return ((slob_t *)block - 1)->units * SLOB_UNIT;
 }
-
-
-

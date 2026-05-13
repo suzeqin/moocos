@@ -41,13 +41,18 @@ SECTIONS {
 
     /* The data segment */
     .data : {
-        *(.data)
+        *(.data .data.*)
+        *(.got.plt)
+        *(.data.rel.local .data.rel.local.*)
+        *(.data.rel.ro.local .data.rel.ro.local.*)
+        *(.data.rel.ro .data.rel.ro.*)
     }
 
     PROVIDE(edata = .);
 
     .bss : {
-        *(.bss)
+        *(.bss .bss.*)
+        *(COMMON)
     }
 
     PROVIDE(end = .);

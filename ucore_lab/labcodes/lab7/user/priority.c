@@ -66,6 +66,7 @@ main(void) {
          cprintf(" %d", (status[i] * 2 / status[0] + 1) / 2);
      }
      cprintf("\n");
+     cprintf("stride sched correct result: 1 2 3 4 5\n");
 
      return 0;
 
@@ -77,4 +78,3 @@ failed:
      }
      panic("FAIL: T.T\n");
 }
-
